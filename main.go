@@ -14,7 +14,8 @@ func main() {
 		fmt.Println("requires at least one subnet argument")
 		os.Exit(1)
 	}
-	for i, netaddr := range os.Args[1:] {
+	total := 0
+	for _, netaddr := range os.Args[1:] {
 		fields := strings.Split(netaddr, "/")
 		if len(fields) != 2 {
 			fmt.Println("malformed CIDR address:", netaddr)
@@ -34,8 +35,8 @@ func main() {
 		fmt.Println("Network Address:  ", sub.GetNetworkPortion())
 		fmt.Println("Broadcast Address:", sub.GetBroadcastAddress())
 		fmt.Println("Subnet Mask:      ", sub.GetSubnetMask())
-		if i < len(os.Args[1:])-1 {
-			fmt.Println()
-		}
+		fmt.Println()
+		total += sub.GetNumberIPAddresses()
 	}
+	fmt.Println("Total: ", total)
 }
